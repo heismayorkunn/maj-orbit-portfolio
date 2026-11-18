@@ -2,18 +2,16 @@
 /* =================================
    1. GLOBAL STYLES
 ================================= */
-html {
-    scroll-behavior: smooth;
-}
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 90px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -84,16 +82,24 @@ nav a:hover {
 ================================= */
 
 .hero {
-    min-height: 620px;
-    padding: 130px 8% 100px;
+    position: relative;
+    min-height: 680px;
+    padding: 140px 8% 110px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    overflow: hidden;
+
     background:
         radial-gradient(
-            circle at 80% 30%,
-            rgba(57, 217, 138, 0.10),
+            circle at 85% 25%,
+            rgba(57, 217, 138, 0.13),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(57, 217, 138, 0.05),
             transparent 35%
         ),
         #0b0d0c;
@@ -108,10 +114,19 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
+.hero .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+}
+
 .hero h1 {
-    max-width: 850px;
-    font-size: clamp(42px, 7vw, 76px);
-    line-height: 1.12;
+    max-width: 900px;
+    font-size: clamp(45px, 7vw, 82px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -2.5px;
     margin-bottom: 25px;
 }
 
@@ -119,17 +134,34 @@ nav a:hover {
     color: #39d98a;
 }
 
-.intro {
+.typing-line {
+    color: #39d98a;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 22px;
+}
+
+.typing-cursor {
+    display: inline-block;
+    color: #39d98a;
+    animation: blink 0.7s infinite;
+}
+
+.hero .intro {
     max-width: 650px;
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 30px;
+    color: #a8b2aa;
+    font-size: 17px;
+    line-height: 1.9;
+    margin-bottom: 35px;
 }
 
 .hero-buttons {
     display: flex;
-    gap: 15px;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
 .btn {
@@ -161,10 +193,23 @@ nav a:hover {
     transform: translateY(-3px);
 }
 
-.location {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #77827a;
+.hero-buttons .btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-buttons .btn:hover {
+    transform: translateY(-4px);
+}
+
+.hero-buttons .btn-primary:hover {
+    box-shadow: 0 8px 25px rgba(57, 217, 138, 0.2);
+}
+
+.hero .location {
+    margin-top: 0;
+    font-size: 13px;
+    color: #829087;
+    letter-spacing: 0.5px;
 }
 
 
@@ -285,30 +330,135 @@ nav a:hover {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 25px;
     margin-top: 40px;
+    align-items: stretch;
 }
 
 .project-card {
+    position: relative;
+    overflow: hidden;
     background-color: #121815;
     border: 1px solid #26342b;
-    border-radius: 12px;
-    padding: 30px;
+    border-radius: 14px;
+    padding: 20px;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    transition: 0.3s ease;
+
+    min-width: 0;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
 }
+
+/* PROJECT IMAGE CONTAINER */
+
+.project-preview {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 9px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background-color: #19251e;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* PROJECT SCREENSHOTS */
+
+.project-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.4s ease;
+}
+
+/* IMAGE HOVER EFFECT */
+
+.project-card:hover .project-preview img {
+    transform: scale(1.03);
+}
+
+/* PROJECT CARD HOVER */
 
 .project-card:hover {
-    transform: translateY(-7px);
+    transform: translateY(-8px);
     border-color: #39d98a;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
 
-.project-card a {
+/* PROJECT TEXT */
+
+.project-card .card-category {
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.project-card h3 {
+    font-size: 25px;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover h3 {
+    color: #39d98a;
+}
+
+.project-card > p:not(.card-category) {
+    color: #a5aaa6;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* PROJECT TECHNOLOGY TAGS */
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
     margin-top: auto;
     padding-top: 20px;
+}
+
+.tech-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border: 1px solid #34443a;
+    border-radius: 5px;
+    background: rgba(57, 217, 138, 0.07);
+    color: #39d98a;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* PROJECT LINKS */
+
+.project-card a {
+    margin-top: 0;
+    padding-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.project-card a:hover {
+    color: #ffffff;
+    transform: translateX(4px);
 }
 
 
@@ -370,9 +520,13 @@ footer p {
    10. ACCESSIBILITY
 ================================= */
 
-a:focus-visible {
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
     outline: 2px solid #39d98a;
-    outline-offset: 5px;
+    outline-offset: 4px;
 }
 
 
@@ -396,82 +550,30 @@ a:focus-visible {
         padding-right: 6%;
     }
 
+    .hero {
+        min-height: 620px;
+        padding-top: 120px;
+        padding-bottom: 90px;
+    }
+
+    .hero h1 {
+        font-size: clamp(42px, 7vw, 68px);
+        letter-spacing: -1.5px;
+    }
+
     .skills-container {
         grid-template-columns: repeat(2, 1fr);
     }
 
     .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 
-@media (max-width: 600px) {
-
-    .site-header {
-        flex-direction: column;
-        padding: 18px 15px;
-        gap: 15px;
-    }
-
-    nav {
-        justify-content: center;
-        gap: 12px 18px;
-    }
-
-    nav a {
-        font-size: 13px;
-    }
-
-    .hero {
-        min-height: auto;
-        padding: 90px 7%;
-    }
-
-    .hero h1 {
-        font-size: 43px;
-    }
-
-    .intro {
-        font-size: 16px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .hero-buttons .btn {
-        text-align: center;
-    }
-
-    .content-section {
-        padding: 75px 7%;
-    }
-
-    .content-section h2 {
-        font-size: 30px;
-    }
-
-    .experience-grid,
-    .skills-container,
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .experience-card,
-    .skill-card,
-    .project-card {
-        padding: 25px;
-    }
-
-    #contact .social-links {
-        gap: 20px;
-    }
-}
-
-
-/* MOBILE NAVIGATION MENU */
+/* =================================
+   12. MOBILE NAVIGATION
+================================= */
 
 .menu-toggle {
     display: none;
@@ -482,33 +584,10 @@ a:focus-visible {
     cursor: pointer;
 }
 
-@media (max-width: 600px) {
 
-    .site-header {
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .site-header nav {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px 0;
-    }
-
-    .site-header nav.active {
-        display: flex;
-    }
-}
-
-
-/* SCROLL REVEAL ANIMATION */
+/* =================================
+   13. SCROLL REVEAL ANIMATION
+================================= */
 
 .reveal {
     opacity: 0;
@@ -522,43 +601,51 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .reveal {
         transition: none;
         transform: none;
     }
+
+    .project-card,
+    .project-preview img,
+    .project-card a,
+    .testimonial-card {
+        transition: none;
+    }
+
 }
 
-/* ACTIVE NAVIGATION LINK */
+
+/* =================================
+   14. ACTIVE NAVIGATION
+================================= */
 
 nav a.active {
     color: #39d98a;
     font-weight: bold;
 }
 
-/* BACK TO TOP BUTTON */
+
+/* =================================
+   15. BACK TO TOP BUTTON
+================================= */
 
 #back-to-top {
     position: fixed;
     bottom: 30px;
     right: 30px;
-
     width: 50px;
     height: 50px;
-
     background-color: #39d98a;
     color: #07120c;
-
     border: none;
     border-radius: 50%;
-
     font-size: 25px;
     font-weight: bold;
-
     cursor: pointer;
-
     opacity: 0;
     visibility: hidden;
-
     transition: 0.3s ease;
     z-index: 1000;
 }
@@ -574,7 +661,9 @@ nav a.active {
 }
 
 
-/* CONTACT FORM */
+/* =================================
+   16. CONTACT FORM
+================================= */
 
 #contact-form {
     max-width: 600px;
@@ -594,7 +683,8 @@ nav a.active {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 15px;
     background-color: #121815;
@@ -603,10 +693,12 @@ nav a.active {
     color: white;
     font-family: Arial, sans-serif;
     font-size: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: #39d98a;
     box-shadow: 0 0 0 3px rgba(57, 217, 138, 0.12);
@@ -615,6 +707,25 @@ nav a.active {
 .form-group textarea {
     min-height: 150px;
     resize: vertical;
+}
+
+
+/* SERVICE DROPDOWN */
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 45px;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2339d98a' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+}
+
+.form-group select option {
+    background-color: #121815;
+    color: #f5f5f5;
 }
 
 #contact-form button {
@@ -628,7 +739,10 @@ nav a.active {
     font-size: 14px;
 }
 
-/* MESSAGE CHARACTER COUNTER */
+
+/* =================================
+   17. MESSAGE CHARACTER COUNTER
+================================= */
 
 #character-count {
     color: #77827a;
@@ -638,11 +752,14 @@ nav a.active {
 }
 
 
-/* PROJECT FILTER BUTTONS */
+/* =================================
+   18. PROJECT FILTER BUTTONS
+================================= */
 
 .project-filters {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
     margin: 30px 0;
 }
@@ -651,13 +768,25 @@ nav a.active {
     background-color: #121815;
     color: #a5aaa6;
     border: 1px solid #34443a;
-    padding: 10px 18px;
+    padding: 10px 20px;
     border-radius: 25px;
     cursor: pointer;
-    transition: 0.3s ease;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
 }
 
-.filter-btn:hover,
+.filter-btn:hover {
+    border-color: #39d98a;
+    color: #39d98a;
+    transform: translateY(-2px);
+}
+
 .filter-btn.active {
     background-color: #39d98a;
     color: #07120c;
@@ -669,7 +798,10 @@ nav a.active {
     display: none;
 }
 
-/* Theme toggle button */
+
+/* =================================
+   19. THEME TOGGLE BUTTON
+================================= */
 
 #theme-toggle {
     background: transparent;
@@ -682,7 +814,10 @@ nav a.active {
     margin-left: 15px;
 }
 
-/* Light mode */
+
+/* =================================
+   20. LIGHT MODE
+================================= */
 
 body.light-mode {
     background-color: #f4f7f5;
@@ -708,20 +843,25 @@ body.light-mode .project-card p {
 }
 
 body.light-mode .form-group input,
-body.light-mode .form-group textarea {
+body.light-mode .form-group textarea,
+body.light-mode .form-group select {
     background-color: #ffffff;
     color: #17221b;
 }
 
-/* Fix text visibility in light mode */
+body.light-mode .form-group select option {
+    background-color: #ffffff;
+    color: #17221b;
+}
+
+/* LIGHT MODE TEXT VISIBILITY */
 
 body.light-mode h1,
 body.light-mode h2,
 body.light-mode h3,
 body.light-mode .logo,
 body.light-mode .section-label,
-body.light-mode .eyebrow,
-body.light-mode .location {
+body.light-mode .eyebrow {
     color: #17221b;
 }
 
@@ -735,11 +875,29 @@ body.light-mode .site-header nav a.active {
 }
 
 body.light-mode .hero {
-    background: #f4f7f5;
+    background:
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(57, 217, 138, 0.13),
+            transparent 32%
+        ),
+        #f4f7f5;
 }
 
 body.light-mode .hero .intro {
     color: #45534a;
+}
+
+body.light-mode .hero .location {
+    color: #64736a;
+}
+
+body.light-mode .hero .eyebrow {
+    color: #16834e;
+}
+
+body.light-mode .typing-line {
+    color: #16834e;
 }
 
 body.light-mode footer {
@@ -759,30 +917,75 @@ body.light-mode #form-status {
     color: #17221b;
 }
 
-/* Typing animation */
+/* LIGHT MODE PROJECT CARDS */
 
-.typing-line {
-    font-size: 22px;
-    color: #39d98a;
-    margin-top: 20px;
-    font-weight: bold;
+body.light-mode .project-card {
+    border-color: #dce6df;
+    box-shadow: 0 8px 25px rgba(20, 50, 30, 0.05);
 }
 
-.typing-cursor {
-    animation: blink 0.7s infinite;
+body.light-mode .project-card:hover {
+    border-color: #39d98a;
+    box-shadow: 0 15px 30px rgba(20, 50, 30, 0.1);
 }
 
-@keyframes blink {
-    50% {
-        opacity: 0;
-    }
+body.light-mode .project-card h3 {
+    color: #17221b;
 }
 
-body.light-mode .typing-line {
+body.light-mode .project-card:hover h3 {
     color: #16834e;
 }
 
-/* Scroll progress bar */
+body.light-mode .project-preview {
+    background-color: #f0f4f1;
+    border-color: #dce6df;
+}
+
+/* LIGHT MODE TECHNOLOGY TAGS */
+
+body.light-mode .tech-tag {
+    background: rgba(57, 217, 138, 0.10);
+    border-color: #b8d9c5;
+    color: #167a49;
+}
+
+/* LIGHT MODE FILTER BUTTONS */
+
+body.light-mode .filter-btn {
+    background-color: #ffffff;
+    color: #45534a;
+    border-color: #d5e0d8;
+}
+
+body.light-mode .filter-btn:hover {
+    color: #16834e;
+    border-color: #39d98a;
+}
+
+body.light-mode .filter-btn.active {
+    background-color: #39d98a;
+    color: #07120c;
+    border-color: #39d98a;
+}
+
+
+/* =================================
+   21. TYPING ANIMATION
+================================= */
+
+@keyframes blink {
+
+    50% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =================================
+   22. SCROLL PROGRESS BAR
+================================= */
 
 #scroll-progress {
     position: fixed;
@@ -795,7 +998,10 @@ body.light-mode .typing-line {
     transition: width 0.1s ease;
 }
 
-/* Copy email button */
+
+/* =================================
+   23. COPY EMAIL BUTTON
+================================= */
 
 #copy-email {
     cursor: pointer;
@@ -812,7 +1018,10 @@ body.light-mode #copy-status {
     color: #16834e;
 }
 
-/* Page loading screen */
+
+/* =================================
+   24. PAGE LOADING SCREEN
+================================= */
 
 #page-loader {
     position: fixed;
@@ -861,16 +1070,490 @@ body.light-mode #copy-status {
 }
 
 @keyframes loading {
+
     from {
         left: -40%;
     }
+
     to {
         left: 100%;
     }
+
 }
 
 #page-loader.loader-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+}
+
+
+/* =================================
+   25. TABLET RESPONSIVENESS
+================================= */
+
+@media (max-width: 768px) {
+
+    .hero {
+        min-height: 600px;
+        padding: 120px 6% 80px;
+    }
+
+    .hero h1 {
+        font-size: clamp(42px, 9vw, 62px);
+        letter-spacing: -1.5px;
+    }
+
+    .hero .intro {
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .typing-line {
+        font-size: 17px;
+    }
+
+}
+
+
+/* =================================
+   26. MOBILE RESPONSIVENESS
+================================= */
+
+@media (max-width: 600px) {
+
+    .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 18px 15px;
+        gap: 15px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .site-header nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 0;
+    }
+
+    .site-header nav.active {
+        display: flex;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 12px 18px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .hero {
+        min-height: 580px;
+        padding: 110px 6% 70px;
+    }
+
+    .hero .eyebrow {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .hero h1 {
+        font-size: 43px;
+        line-height: 1.12;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero .location {
+        font-size: 12px;
+    }
+
+    .experience-grid,
+    .skills-container,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .content-section {
+        padding: 75px 6%;
+    }
+
+    .content-section h2 {
+        font-size: 32px;
+    }
+
+    .project-card {
+        padding: 18px;
+    }
+
+    .project-preview {
+        height: 200px;
+        margin-bottom: 20px;
+    }
+
+    .project-filters {
+        gap: 9px;
+    }
+
+    .filter-btn {
+        padding: 9px 15px;
+        font-size: 12px;
+    }
+
+    .project-tech {
+        gap: 7px;
+    }
+
+    .tech-tag {
+        font-size: 10px;
+        padding: 6px 9px;
+    }
+
+}
+
+
+/* =================================
+   27. TESTIMONIALS SECTION
+================================= */
+
+.testimonials-intro {
+    max-width: 650px;
+    line-height: 1.8;
+}
+
+/* TESTIMONIAL CARDS GRID */
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    margin-top: 35px;
+    max-width: 1000px;
+}
+
+/* INDIVIDUAL TESTIMONIAL CARD */
+
+.testimonial-card {
+    background-color: #121815;
+    border: 1px solid #26342b;
+    border-radius: 14px;
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-6px);
+    border-color: #39d98a;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* QUOTATION MARK */
+
+.quote-mark {
+    color: #39d98a;
+    font-size: 52px;
+    line-height: 1;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* TESTIMONIAL TEXT */
+
+.testimonial-card > p {
+    color: #b0b8b2;
+    font-size: 15px;
+    line-height: 1.9;
+    flex-grow: 1;
+}
+
+/* TESTIMONIAL AUTHOR */
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #26342b;
+}
+
+/* AUTHOR INITIALS */
+
+.author-avatar {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    background: rgba(57, 217, 138, 0.12);
+    border: 1px solid #34443a;
+
+    color: #39d98a;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* AUTHOR NAME */
+
+.testimonial-author h3 {
+    color: #f5f5f5;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+/* AUTHOR ROLE */
+
+.testimonial-author span {
+    display: block;
+    color: #8e9991;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =================================
+   28. TESTIMONIALS LIGHT MODE
+================================= */
+
+body.light-mode .testimonial-card {
+    background-color: #ffffff;
+    border-color: #dce6df;
+    box-shadow: 0 8px 25px rgba(20, 50, 30, 0.05);
+}
+
+body.light-mode .testimonial-card:hover {
+    border-color: #39d98a;
+    box-shadow: 0 12px 30px rgba(20, 50, 30, 0.1);
+}
+
+body.light-mode .testimonial-card > p {
+    color: #45534a;
+}
+
+body.light-mode .testimonial-author {
+    border-color: #dce6df;
+}
+
+body.light-mode .testimonial-author h3 {
+    color: #17221b;
+}
+
+body.light-mode .testimonial-author span {
+    color: #64736a;
+}
+
+body.light-mode .author-avatar {
+    background: rgba(57, 217, 138, 0.12);
+    border-color: #b8d9c5;
+    color: #16834e;
+}
+
+
+/* =================================
+   29. TESTIMONIALS RESPONSIVENESS
+================================= */
+
+@media (max-width: 900px) {
+
+    .testimonials-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .testimonial-card {
+        padding: 25px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .testimonial-card {
+        padding: 22px;
+    }
+
+    .testimonial-card > p {
+        font-size: 14px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .testimonial-card {
+        transition: none;
+    }
+
+}
+
+
+/* =================================
+   30. WHATSAPP CONTACT BUTTON
+================================= */
+
+.whatsapp-contact {
+    margin: 35px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.whatsapp-contact p {
+    color: #a5aaa6;
+    font-size: 15px;
+}
+
+.whatsapp-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    padding: 14px 24px;
+    background: #25d366;
+    color: #062b16;
+    border: 1px solid #25d366;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.whatsapp-contact-btn svg {
+    width: 21px;
+    height: 21px;
+    fill: currentColor;
+}
+
+.whatsapp-contact-btn:hover {
+    background: #20bd5a;
+    border-color: #20bd5a;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.2);
+}
+
+
+/* =================================
+   31. FLOATING WHATSAPP BUTTON
+================================= */
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #25d366;
+    color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-float svg {
+    width: 29px;
+    height: 29px;
+    fill: currentColor;
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+
+/* =================================
+   32. WHATSAPP LIGHT MODE
+================================= */
+
+body.light-mode .whatsapp-contact p {
+    color: #45534a;
+}
+
+
+/* =================================
+   33. FLOATING BUTTON RESPONSIVENESS
+================================= */
+
+@media (max-width: 600px) {
+
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        left: 20px;
+    }
+
+    .whatsapp-float svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    #back-to-top {
+        width: 46px;
+        height: 46px;
+        bottom: 22px;
+        right: 20px;
+    }
+
+    .whatsapp-contact-btn {
+        width: 100%;
+        max-width: 310px;
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+
+}
+
+
+/* =================================
+   34. REDUCED MOTION
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .whatsapp-float,
+    .whatsapp-contact-btn {
+        transition: none;
+    }
+
 }

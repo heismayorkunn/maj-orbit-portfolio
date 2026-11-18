@@ -157,46 +157,80 @@ backToTop.addEventListener("click", function () {
 });
 
 
-// Select the contact form
+// Contact form powered by Formspree
+
 const contactForm = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
 
-// Listen for form submission
-contactForm.addEventListener("submit", function (event) {
+contactForm.addEventListener("submit", async function (event) {
 
-    // Prevent the page from refreshing
     event.preventDefault();
 
-    // Collect the visitor's information
-    const name = document.getElementById("fullname").value.trim();
+    const submitButton = contactForm.querySelector(
+        'button[type="submit"]'
+    );
 
-    const email = document.getElementById("email").value.trim();
+    const formData = new FormData(contactForm);
 
-    const message = document.getElementById("message").value.trim();
+    // Prevent duplicate submissions
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
 
-    // Check that the fields are not empty
-    if (!name || !email || !message) {
+    formStatus.textContent = "Sending your message...";
+    formStatus.classList.remove("success", "error");
 
-        alert("Please complete all fields.");
+    try {
 
-        return;
+        const response = await fetch(contactForm.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+
+        if (response.ok) {
+
+            formStatus.textContent =
+                "Your message has been sent successfully! I'll get back to you soon.";
+
+            formStatus.classList.add("success");
+
+            contactForm.reset();
+
+            // Reset character counter
+            document.getElementById("character-count").textContent =
+                "0 / 500 characters";
+
+       } else {
+
+    const result = await response.json();
+
+    formStatus.textContent =
+        result.errors
+            ? result.errors.map(error => error.message).join(", ")
+            : "Sorry, your message could not be sent. Please try again.";
+
+    formStatus.classList.add("error");
+
+}
+
+    } catch (error) {
+
+        formStatus.textContent =
+            "Network error. Please check your internet connection and try again.";
+
+        formStatus.classList.add("error");
+
+    } finally {
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Message →";
 
     }
 
-    // Prepare the email
-    const subject = encodeURIComponent("Portfolio Contact from " + name);
-
-    const body = encodeURIComponent(
-        "Name: " + name +
-        "\nEmail: " + email +
-        "\n\nMessage:\n" + message
-    );
-
-    // Open the visitor's email application
-    window.location.href =
-        "mailto:igohigbunuisaiah91@gmail.com?subject=" +
-        subject + "&body=" + body;
-
 });
+
 
 // Select the message field and character counter
 const messageInput = document.getElementById("message");
@@ -350,8 +384,9 @@ window.addEventListener("scroll", function () {
 
     const scrollPosition = window.scrollY;
 
-    const progress =
-        (scrollPosition / scrollableHeight) * 100;
+    const progress = scrollableHeight > 0
+    ? (scrollPosition / scrollableHeight) * 100
+    : 0;
 
     scrollProgress.style.width = progress + "%";
 });
